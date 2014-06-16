@@ -1,7 +1,7 @@
 /*********************************************
  * vim:sw=8:ts=8:si:et
  * To use the above modeline in vim you must have "set modeline" in your .vimrc
- * Author: Guido Socher 
+ * Author: Guido Socher
  * Copyright: GPL V2
  * http://www.gnu.org/licenses/gpl.html
  *
@@ -16,6 +16,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
 
 #include "enc28j60.h"
 
@@ -54,7 +55,7 @@ static void sendSPI(byte data) {
 }
 
 
-uint8_t enc28j60ReadOp(uint8_t op, uint8_t address)
+uint8_t enc28j60ReadOp(uint8_t op PROGMEM, uint8_t address)
 {
         enableChip();
         // issue read command
@@ -147,7 +148,7 @@ uint16_t enc28j60PhyReadH(uint8_t address)
 
 	// reset reading bit
 	enc28j60Write(MICMD, 0x00);
-	
+
 	return (enc28j60Read(MIRDH));
 }
 
@@ -200,7 +201,7 @@ void enc28j60SpiInit() {
        	digitalWrite(SPI_MOSI, HIGH);
        	digitalWrite(SPI_MOSI, LOW);
 	digitalWrite(SPI_SCK, LOW);
-	
+
 #ifdef USE_RF12
         // use clk/8 (2x 1/16th) to avoid exceeding RF12's SPI specs of 2.5 MHz when both are used together
         SPCR = _BV(SPE) | _BV(MSTR);
@@ -219,7 +220,7 @@ void enc28j60Init(const uint8_t* macaddr)
 void enc28j60InitWithCs( const uint8_t* macaddr, uint8_t csPin )
 {
 	// initialize I/O
-        enc28j60ControlCs = csPin; 
+        enc28j60ControlCs = csPin;
         // ss as output:
 	pinMode(csPin, OUTPUT);
 	disableChip(); // ss=0
@@ -248,7 +249,7 @@ void enc28j60InitWithCs( const uint8_t* macaddr, uint8_t csPin )
 	// do bank 1 stuff, packet filter:
         // For broadcast packets we allow only ARP packtets
         // All other packets should be unicast only for our mac (MAADR)
-	// 
+	//
 	// (Note from SDE: in some environments, DHCP offers are broadcast.
 	// The UIP DHCP client requires broadcast offers - without them
 	// the UIP input processing code will throw away the response packet
@@ -280,7 +281,7 @@ void enc28j60InitWithCs( const uint8_t* macaddr, uint8_t csPin )
 	enc28j60Write(MABBIPG, 0x12);
 	// Set the maximum packet size which the controller will accept
         // Do not send packets longer than MAX_FRAMELEN:
-	enc28j60WriteWord(MAMXFLL, MAX_FRAMELEN);	
+	enc28j60WriteWord(MAMXFLL, MAX_FRAMELEN);
 	// do bank 3 stuff
         // write MAC address
         // NOTE: MAC address in ENC28J60 is byte-backward
@@ -469,4 +470,3 @@ uint16_t enc28j60PacketReceive(uint16_t maxlen, uint8_t* packet)
 	return(len);
 */
 }
-

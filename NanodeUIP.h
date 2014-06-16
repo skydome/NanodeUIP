@@ -23,10 +23,10 @@ typedef void resolv_result_fn(char *name, uip_ipaddr_t *addr);
 
 class NanodeUIP {
  private:
-  struct timer periodic_timer, arp_timer;
+  struct timer periodic_timer, arp_timer  PROGMEM;
  public:
-  dhcp_status_fn *dhcp_status_callback;
-  resolv_result_fn *resolv_status_callback;
+  dhcp_status_fn *dhcp_status_callback PROGMEM;
+  resolv_result_fn *resolv_status_callback PROGMEM;
   /* This constructor can't actually do anything, because it gets
      called before usable amounts of Arduino infrastructure are
      initialised.   Call the init() function from your sketch instead. */
@@ -68,7 +68,7 @@ class NanodeUIP {
   /* Start looking up a name; when found it will be cached, and the
      resolver callback function will be called. */
   void query_name(char *name);
-  
+
   /* Return an address from the cache */
   uip_ipaddr_t *lookup_name(char *name);
 };

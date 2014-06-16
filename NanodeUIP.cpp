@@ -90,7 +90,7 @@ void NanodeUIP::set_nameserver_addr(byte a, byte b, byte c, byte d) {
   uip_ipaddr_t ipaddr;
   uip_ipaddr(&ipaddr, a,b,c,d);
   resolv_conf(&ipaddr);
-}  
+}
 
 // Requires a buffer of at least 18 bytes to format into
 void NanodeUIP::get_mac_str(char *buf) {
@@ -172,7 +172,7 @@ void NanodeUIP::poll(void) {
 	enc28j60PacketSend(uip_len,uip_buf);
       }
     }
-    
+
 #if UIP_UDP
     for(i = 0; i < UIP_UDP_CONNS; i++) {
       uip_udp_periodic(i);
@@ -185,7 +185,7 @@ void NanodeUIP::poll(void) {
       }
     }
 #endif /* UIP_UDP */
-    
+
     /* Call the ARP timer function every 10 seconds. */
     if(timer_expired(&arp_timer)) {
       timer_reset(&arp_timer);

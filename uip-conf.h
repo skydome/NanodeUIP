@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007, Swedish Institute of Computer Science
- * All rights reserved. 
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -52,14 +52,14 @@ typedef unsigned short uip_stats_t;
  *
  * \hideinitializer
  */
-#define UIP_CONF_MAX_CONNECTIONS 3
+#define UIP_CONF_MAX_CONNECTIONS 1
 
 /**
  * Maximum number of listening TCP ports.
  *
  * \hideinitializer
  */
-#define UIP_CONF_MAX_LISTENPORTS 3
+#define UIP_CONF_MAX_LISTENPORTS 1
 
 /**
  * uIP buffer size.
